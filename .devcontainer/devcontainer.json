@@ -1,0 +1,35 @@
+{
+	"name": "MLE Interview",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/python:1-3.10",
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"[python]": {
+					"python.formatting.provider": "none",
+					"editor.defaultFormatter": "ms-python.black-formatter",
+					"editor.formatOnSave": true,
+					"editor.codeActionsOnSave": {
+						"source.fixAll.ruff": true,
+						"source.organizeImports.ruff": true,
+						"source.organizeImports": true
+					}
+				},
+			},
+			"extensions": [
+				"charliermarsh.ruff",
+				"ms-azuretools.vscode-docker",
+				"ms-python.black-formatter",
+				"ms-python.python",
+				"ms-toolsai.jupyter",
+				"redhat.vscode-yaml",
+				"vscode-icons-team.vscode-icons",
+				"wayou.vscode-todo-highlight"
+			]
+		}
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker": {}
+	},
+	"postCreateCommand": "make setup"
+}

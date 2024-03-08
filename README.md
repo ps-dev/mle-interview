@@ -1,0 +1,122 @@
+# MLE Interview:
+
+
+## Setup
+1. Clone this repo
+2. Launch devcontainer and wait for the setup to complete. 
+
+## Problems
+1. Fix the model training error. Run `make train` to train and export the TensorFlow model in the SavedModel format. An error occurs during the training phase.
+2. Fix the API startup issue. An error occurs when starting the Flask API. Run `make serve-api` and check the logs for more details.
+3. Correct the expected return data and the length of interests.
+4. Improve the response time to be 1 second or less.
+5. Add a probability field to the response body.
+6. Implement filtering based on the probability score.
+
+
+## Make Commands
+
+Before you start, ensure you have all the necessary dependencies installed:
+
+```
+make setup
+```
+
+This command will install the Python dependencies listed in `requirements.txt`. 
+
+### Serve API
+
+To start the Flask API, use the following command:
+
+```
+make serve-api
+```
+
+This command launches the Flask application defined in `api/app` on port 5005, accessible via `0.0.0.0`. The `--debug` flag is included to enable debug mode, which provides useful debugging information in case of errors and automatically reloads the server on code changes.
+
+### Serve Model
+
+If you're using a TensorFlow model served via Docker, you can start the TensorFlow serving using:
+
+```
+make serve-model
+```
+
+This command uses Docker Compose to spin up a container defined in the Docker configuration, specifically targeting the TensorFlow serving service (`tf-serving`). Ensure Docker is installed and running on your system before executing this command.
+
+### Train
+
+To train the model, execute:
+
+```
+make train
+```
+
+This command runs the main training script located at `model.main`. 
+
+### Test
+
+Finally, to run the tests for your project, use:
+
+```
+make test
+```
+
+This command runs all the tests in the `./tests` directory using pytest. 
+
+
+## API
+
+Route: GET: http://localhost:5005/interests/:userHandle
+
+API Response:
+
+```
+{
+    "user_handle": "e337a675-46f5-437e-aa72-5d43643b5461",
+    "interests": [
+        {
+            "id": "29e020bb-7a02-41db-b21f-527a8ef4dfdf",
+            "label": "Accounting technician"
+        },
+        {
+            "id": "012abcd1-3a6a-4803-a47e-42f46b402024",
+            "label": "Field seismologist"
+        },
+        {
+            "id": "a1b028dd-8464-4c63-85e8-ae29ea184fc7",
+            "label": "Designer, industrial/product"
+        },
+        {
+            "id": "686af7e4-6d58-4148-b227-3bf65ff10273",
+            "label": "Materials engineer"
+        },
+        {
+            "id": "8d1526b9-a7bf-4972-be43-7b912f149667",
+            "label": "Fashion designer"
+        },
+        {
+            "id": "d83a55a3-0143-4318-91c1-88f44ad59390",
+            "label": "Journalist, newspaper"
+        },
+        {
+            "id": "cda4441f-dba6-495c-9e2e-7429bd5e0465",
+            "label": "Therapist, music"
+        },
+        {
+            "id": "e9b23ad4-753b-4331-9cfa-525965fcf281",
+            "label": "Secretary, company"
+        },
+        {
+            "id": "ca4b03b2-0ae2-440a-afc8-5469510b19cb",
+            "label": "Commissioning editor"
+        },
+        {
+            "id": "fd3c41b8-8c15-47e2-a80d-cf3683b2d0da",
+            "label": "Copywriter, advertising"
+        }
+    ],
+    "name": "Kisiza",
+    "type": "B2B"
+}
+```

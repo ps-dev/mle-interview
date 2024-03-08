@@ -1,0 +1,23 @@
+line-length = 88
+
+ignore = ["E501", "F401", "F841", "PLR0913"]
+select = [
+  "E",   # pycodestyle
+  "F",   # pyflakes
+  "I",  # isort
+  "PL", # pylint,
+  "T20", # type
+  "PT", #pytest
+  "FIX", #fixme
+]
+
+
+[per-file-ignores]
+"__init__.py" = ["F401"]
+"test_*.py" = ["F401"]
+
+[flake8-pytest-style]
+fixture-parentheses = false
+
+
+
