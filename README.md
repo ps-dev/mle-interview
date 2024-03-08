@@ -2,8 +2,15 @@
 
 
 ## Setup
-1. Clone this repo
-2. Launch devcontainer and wait for the setup to complete. 
+1. Install [Visual Studio Code](https://code.visualstudio.com/). Also the following plugins:
+    - [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+2. Clone this repo
+3. Open the repository in VSCode (`code .`)
+4. VSCode will prompt you to install recommended extensions. Select `Yes`
+    - If you missed this step, you can install recommended extensions using the extensions sidebar (`⇧⌘X`)
+5. VSCode will prompt you to reopen the workspace in a Dev Container. Select `Yes`.
+    - If you missed this step, open the command prompt palette (`⇧⌘P`) and run the command `Remote-Containers: Rebuild and Reopen in Container`
+
 
 ## Problems
 1. Fix the model training error. Run `make train` to train and export the TensorFlow model in the SavedModel format. An error occurs during the training phase.
