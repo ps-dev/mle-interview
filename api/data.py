@@ -8,9 +8,9 @@ from .types import Interest, UserFeatureStoreRecord
 
 
 class FeatureStore:
-    user_features_file_path = "/workspaces/ml-interview/api/datasets/users_data.csv"
+    user_features_file_path = "./api/datasets/users_data.csv"
     content_activity_file_path = (
-        "/workspaces/ml-interview/api/datasets/content_activity.csv"
+        "./api/datasets/content_activity.csv"
     )
 
     def __init__(self):

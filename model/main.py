@@ -7,7 +7,7 @@ import tensorflow as tf
 from .dataset import get_tf_dataset
 from .model import UserInterestsModel
 
-dataset = pd.read_csv("/workspaces/ml-interview/model/user_interactions.csv.gz", compression='gzip')
+dataset = pd.read_csv("./model/user_interactions.csv.gz", compression='gzip')
 
 dataset["USER_INTERESTS"] = dataset["USER_INTERESTS"].map(lambda x: literal_eval(x))
 
