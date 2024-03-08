@@ -11,4 +11,4 @@ train:
 	TF_CPP_MIN_LOG_LEVEL=3 python -m model.main
 
 test:
-	pytest ./tests
+	TF_CPP_MIN_LOG_LEVEL=3 pytest ./tests -p no:warnings

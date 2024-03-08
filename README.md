@@ -12,15 +12,28 @@
     - If you missed this step, open the command prompt palette (`⇧⌘P`) and run the command `Remote-Containers: Rebuild and Reopen in Container`
 
 
-## Problems
-1. Fix the model training error. Run `make train` to train and export the TensorFlow model in the SavedModel format. An error occurs during the training phase.
-2. Fix the API startup issue. An error occurs when starting the Flask API. Run `make serve-api` and check the logs for more details.
-3. Correct the expected return data and the length of interests.
-4. Improve the response time to be 1 second or less.
-5. Add a probability field to the response body.
-6. Implement filtering based on the probability score.
+## Coding Challenge
 
+1. **Model Training Error Resolution:**
+   - First, address the model training error by executing `make test` to run the tests and identify any issues.
+   - Once the `TestModel::test_model_build` test passes, proceed with `make train` to train and export the model. This step is crucial for preparing the model for subsequent processes.
 
+2. **API Startup Issue Fix:**
+   - To resolve the startup issue with the Flask API, execute `make serve-api`.
+   - Carefully examine the logs for any error messages or indications of what might be causing the startup failure, and address those issues accordingly.
+
+3. **Data Return and Interests Length Correction:**
+   - Ensure that the expected return data is correctly structured and that the length of the interests array aligns with the specifications. Make adjustments to meet the expected outcomes.
+
+4. **Response Time Optimization:**
+   - Improve the response time to one second or less. This may involve identifying and resolving system bottlenecks, optimizing code, or improving resource allocation.
+
+5. **Probability Field Inclusion:**
+   - Modify the response body to include a 'probability' field. This field should provide users with additional insights by indicating the confidence level or likelihood associated with the response.
+
+6. **Probability Score Filtering Implementation:**
+   - Develop functionality that allows API clients to filter results based on the probability score. This feature should enable users to refine their results based on a specified probability threshold.
+   
 ## Make Commands
 
 Before you start, ensure you have all the necessary dependencies installed:
