@@ -118,11 +118,17 @@ class UserInterestsModel(tf.keras.Model):
         """
         Forward pass for the model.
 
+        It starts by tokenizing the input content titles, generating embeddings for them, and then
+        calculating the mean of these embeddings. It also encodes the user type and retrieves the
+        user handle embeddings. The various features are concatenated and passed through hidden layers
+        and normalization before producing the final output tensor.
+
         Args:
-            input (Dict[str, tf.Tensor]): A dictionary containing input tensors.
+            input (Dict[str, tf.Tensor]): A dictionary containing input tensors such as CONTENT_TITLES_JOINED,
+            USER_TYPE, and USER_HANDLE.
 
         Returns:
-            tf.Tensor: The output tensor of the model.
+            tf.Tensor: The output tensor of the model representing the predicted values.
         """
         query_tokenize = self.content_title_tokenizer(input["CONTENT_TITLES_JOINED"])
         query_embedding = self.content_title_embeddings(query_tokenize)

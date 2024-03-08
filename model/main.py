@@ -7,6 +7,7 @@ import tensorflow as tf
 from .dataset import get_tf_dataset
 from .model import UserInterestsModel
 
+# Load data and create vocab sets
 dataset = pd.read_csv("./model/user_interactions.csv.gz", compression='gzip')
 
 dataset["USER_INTERESTS"] = dataset["USER_INTERESTS"].map(lambda x: literal_eval(x))
@@ -19,12 +20,14 @@ interests_vocab = list(set(itertools.chain.from_iterable(dataset["USER_INTERESTS
 
 training_dataset = get_tf_dataset(dataset, 64)
 
+# Model training params
 hyper_params = {
     "embedding_output_dims": 124,
     "hidden_units": [128, 64],
     "learning_rate": 0.01,
 }
 
+# Train and export model
 model = UserInterestsModel(
     interests_vocab=interests_vocab,
     user_handles_vocab=user_handles_vocab,
