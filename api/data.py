@@ -8,7 +8,7 @@ from .types import Interest, UserFeatureStoreRecord
 
 
 class FeatureStore:
-    user_features_file_path = "/workspaces/ml-interview/api/datasets/users.csv"
+    user_features_file_path = "/workspaces/ml-interview/api/datasets/users_data.csv"
     content_activity_file_path = (
         "/workspaces/ml-interview/api/datasets/content_activity.csv"
     )

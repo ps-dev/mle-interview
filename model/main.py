@@ -5,7 +5,7 @@ import pandas as pd
 import tensorflow as tf
 
 from .dataset import get_tf_dataset
-from .model import ProductRankerModel
+from .model import UserInterestsModel
 
 dataset = pd.read_csv("/workspaces/ml-interview/model/user_interactions.csv.gz", compression='gzip')
 
@@ -25,7 +25,7 @@ hyper_params = {
     "learning_rate": 0.01,
 }
 
-model = ProductRankerModel(
+model = UserInterestsModel(
     interests_vocab=interests_vocab,
     user_handles_vocab=user_handles_vocab,
     content_titles_vocab=content_titles,

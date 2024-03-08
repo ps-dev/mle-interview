@@ -17,7 +17,20 @@ SERVING_TOPK_INPUT_SIG = (
 )
 
 
-class ProductRankerModel(tf.keras.Model):
+class UserInterestsModel(tf.keras.Model):
+    """
+    A model that predicts user interests based on their content interaction and user attributes.
+    It utilizes embeddings and dense layers to generate a vector representation of user interests.
+
+    Attributes:
+        content_titles_vocab (List[str]): Vocabulary of content titles.
+        user_handles_vocab (List[str]): Vocabulary of user handles.
+        interests_vocab (List[str]): Vocabulary of interests.
+        user_types (List[str]): List of user types.
+        hyper_params (Dict[str, Any]): Hyperparameters for the model.
+        mask_token (Optional[str]): Token used for masking, if any.
+    """
+
     def __init__(
         self,
         content_titles_vocab: List[str],
@@ -27,7 +40,7 @@ class ProductRankerModel(tf.keras.Model):
         hyper_params: Dict[str, Any],
         mask_token: Optional[str] = None,
     ):
-        super(ProductRankerModel, self).__init__()
+        super(UserInterestsModel, self).__init__()
 
         self.hyper_params = hyper_params
 
@@ -37,28 +50,39 @@ class ProductRankerModel(tf.keras.Model):
         self.content_title_embeddings = keras.layers.Embedding(
             input_dim=self.content_title_tokenizer.vocabulary_size(),
             output_dim=hyper_params["embedding_output_dims"],
+            name="content_title_embeddings",
         )
 
         self.user_type_lookup = keras.layers.StringLookup(
-            vocabulary=user_types, num_oov_indices=1, mask_token=mask_token
+            vocabulary=user_types,
+            num_oov_indices=1,
+            mask_token=mask_token,
+            name="user_type_lookup",
         )
         self.user_type = keras.layers.CategoryEncoding(
-            num_tokens=self.user_type_lookup.vocabulary_size(), output_mode="one_hot"
+            num_tokens=self.user_type_lookup.vocabulary_size(),
+            output_mode="one_hot",
+            name="user_type",
         )
 
         self.user_handle_lookup = keras.layers.StringLookup(
-            vocabulary=user_handles_vocab, num_oov_indices=1, mask_token=mask_token
+            vocabulary=user_handles_vocab,
+            num_oov_indices=1,
+            mask_token=mask_token,
+            name="user_handle_lookup",
         )
         self.user_embeddings = keras.layers.Embedding(
             input_dim=self.user_handle_lookup.vocabulary_size(),
             output_dim=hyper_params["embedding_output_dims"],
+            name="user_embeddings",
         )
 
         self.target_interests_lookup = keras.layers.StringLookup(
             vocabulary=interests_vocab,
             num_oov_indices=0,
             mask_token=mask_token,
-            output_mode="multi_hot",
+            output_mode="one_hot",
+            name="target_interests_lookup",
         )
 
         self.index_to_interest_lookup = keras.layers.StringLookup(
@@ -67,6 +91,7 @@ class ProductRankerModel(tf.keras.Model):
             mask_token=mask_token,
             output_mode="int",
             invert=True,
+            name="index_to_interest_lookup",
         )
 
         self.hidden_layers = keras.Sequential()
@@ -90,6 +115,15 @@ class ProductRankerModel(tf.keras.Model):
         return cls(**config)
 
     def call(self, input: Dict[str, tf.Tensor]) -> tf.Tensor:
+        """
+        Forward pass for the model.
+
+        Args:
+            input (Dict[str, tf.Tensor]): A dictionary containing input tensors.
+
+        Returns:
+            tf.Tensor: The output tensor of the model.
+        """
         query_tokenize = self.content_title_tokenizer(input["CONTENT_TITLES_JOINED"])
         query_embedding = self.content_title_embeddings(query_tokenize)
 
@@ -113,6 +147,15 @@ class ProductRankerModel(tf.keras.Model):
         return self.output_layer(user_vector_norm)
 
     def train_step(self, dataset: tf.data.Dataset) -> Dict[str, Union[float, int, str]]:
+        """
+        Custom training step for the model.
+
+        Args:
+            dataset (tf.data.Dataset): The dataset to train on.
+
+        Returns:
+            Dict[str, Union[float, int, str]]: A dictionary containing metric results.
+        """
         (inputs, targets) = dataset
 
         target_tensor = self.target_interests_lookup(targets)
@@ -142,6 +185,17 @@ class ProductRankerModel(tf.keras.Model):
     def serving_predict(
         self, input_record: Dict[str, tf.Tensor], top_k: tf.Tensor = 5
     ) -> Dict[str, tf.Tensor]:
+        """
+        Generates predictions for serving with an option to return top K results.
+
+        Args:
+            input_record (Dict[str, tf.Tensor]): Input data for prediction.
+            top_k (tf.Tensor): Tensor indicating the number of top results to return.
+
+        Returns:
+            Dict[str, tf.Tensor]: A dictionary with keys 'interests_ids' and 'probabilities',
+                                   containing the top K interests and their corresponding probabilities.
+        """
 
         if top_k.shape.rank == 1:
             top_k = tf.squeeze(top_k)

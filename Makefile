@@ -8,7 +8,7 @@ serve-model:
 	docker compose up tf-serving
 
 train:
-	python -m model.main
+	TF_CPP_MIN_LOG_LEVEL=3 python -m model.main
 
 test:
 	pytest ./tests
