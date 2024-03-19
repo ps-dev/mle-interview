@@ -17,6 +17,7 @@ class UserInterestsRequest(BaseModel):
 class Interest(BaseModel):
     id: uuid.UUID
     label: str
+    probability: float
 
 
 class UserInterestsResponse(BaseModel):

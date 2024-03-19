@@ -16,6 +16,7 @@ SERVING_TOPK_INPUT_SIG = (
     tf.TensorSpec(shape=(None), dtype=tf.int64, name="top_k"),
 )
 
+[0,1,0,1,0,0,0,0]
 
 class UserInterestsModel(tf.keras.Model):
     """
@@ -81,7 +82,7 @@ class UserInterestsModel(tf.keras.Model):
             vocabulary=interests_vocab,
             num_oov_indices=0,
             mask_token=mask_token,
-            output_mode="one_hot",
+            output_mode="multi_hot",
             name="target_interests_lookup",
         )
 

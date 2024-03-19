@@ -17,7 +17,7 @@ app.feature_store = FeatureStore()
 @validate()
 def get_interests(user_handle: uuid.UUID) -> UserInterestsResponse:
     features = app.feature_store.get_user_features(user_handle)
-    top_k = request.args.get("top_k", default=10, type=int)
+    top_k = request.args.get("top_k", default=15, type=int)
 
     features = cast(UserFeatureStoreRecord, features)
 
@@ -28,9 +28,12 @@ def get_interests(user_handle: uuid.UUID) -> UserInterestsResponse:
     )
 
     top_interests = get_interests_from_model(user_features, top_k=top_k)
-    ids = [interest.id for interest in top_interests]
 
-    labels = app.feature_store.get_interests_labels(ids)
+
+    ids = [interest.id for interest in top_interests]
+    probs = [interest.probability for interest in top_interests]
+
+    labels = app.feature_store.get_interests_labels(ids, probs)
 
     return UserInterestsResponse(
         user_handle=user_handle,
