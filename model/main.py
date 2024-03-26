@@ -51,7 +51,7 @@ callbacks = [
 
 model.fit(
     training_dataset.take(100).cache(),
-    epochs=2,
+    epochs=1,
     callbacks=callbacks,
 )
 
