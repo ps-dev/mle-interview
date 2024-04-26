@@ -42,4 +42,4 @@ class TestInterestsAPI:
             assert "label" in interest, f"Interest object missing 'label': {interest}"
             assert (
                 "probability" in interest
-            ), f"Interest object missing 'label': {interest}"
+            ), f"Interest object missing 'probability': {interest}"
