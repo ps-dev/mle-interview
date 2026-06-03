@@ -4,12 +4,13 @@
 ## Setup
 1. Install [Visual Studio Code](https://code.visualstudio.com/). Also the following plugins:
     - [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+    - [GitHub Codespaces](https://marketplace.visualstudio.com/items?itemName=GitHub.codespaces)
 2. Clone this repo
 3. Open the repository in VSCode (`code .`)
 4. VSCode will prompt you to install recommended extensions. Select `Yes`
     - If you missed this step, you can install recommended extensions using the extensions sidebar (`⇧⌘X`)
 5. VSCode will prompt you to reopen the workspace in a Dev Container. Select `Yes`.
-    - If you missed this step, open the command prompt palette (`⇧⌘P`) and run the command `Remote-Containers: Rebuild and Reopen in Container`
+    - If you missed this step, open the command prompt palette (`⇧⌘P`) and run the command `Dev Containers: Rebuild and Reopen in Container`
 
 
 ## Make Commands
@@ -20,7 +21,7 @@ Before you start, ensure you have all the necessary dependencies installed:
 make setup
 ```
 
-This command will install the Python dependencies listed in `requirements.txt`. 
+This command will install the Python dependencies listed in `requirements.txt`. The project is configured to run in the Dev Container's Python 3.10 environment for TensorFlow compatibility.
 
 ### Serve API
 
