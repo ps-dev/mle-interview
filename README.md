@@ -4,7 +4,7 @@
 ## Setup
 1. Install [Visual Studio Code](https://code.visualstudio.com/). Also the following plugins:
     - [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
-    - [GitHub Codespaces](https://marketplace.visualstudio.com/items?itemName=GitHub.codespaces)
+    - (Optional for local development) [GitHub Codespaces](https://marketplace.visualstudio.com/items?itemName=GitHub.codespaces)
 2. Clone this repo
 3. Open the repository in VSCode (`code .`)
 4. VSCode will prompt you to install recommended extensions. Select `Yes`
@@ -21,7 +21,8 @@ Before you start, ensure you have all the necessary dependencies installed:
 make setup
 ```
 
-This command will install the Python dependencies listed in `requirements.txt`. The project is configured to run in the Dev Container's Python 3.10 environment for TensorFlow compatibility.
+This command will install the Python dependencies listed in `requirements.txt`.
+The project is configured to run in the Dev Container's Python 3.10 environment for TensorFlow compatibility.
 
 ### Serve API
 
