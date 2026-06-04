@@ -1,7 +1,7 @@
 {
 	"name": "MLE Interview",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/python:3.12",
+	"build": { "dockerfile": "Dockerfile" },
+	"initializeCommand": "cp ~/.ssl/zscaler-bundle.pem .devcontainer/zscaler-bundle.pem 2>/dev/null || touch .devcontainer/zscaler-bundle.pem",
 	"customizations": {
 		"vscode": {
 			"settings": {
@@ -14,7 +14,7 @@
 						"source.organizeImports.ruff": true,
 						"source.organizeImports": true
 					}
-				},
+				}
 			},
 			"extensions": [
 				"charliermarsh.ruff",
@@ -30,7 +30,8 @@
 	},
 	"features": {
 		"ghcr.io/devcontainers/features/docker-in-docker:3": {
-			"moby": false
+			"moby": false,
+			"disableIp6tables": true
 		}
 	},
 	"postCreateCommand": "make setup"

@@ -1,8 +1,7 @@
 
 ## Coding Challenge
 
-You can refer to Google or relevant documentation to guide you in addressing the issues below. 
-You are not allowed to use ChatGPT, Copilot, or any similar tools for assistance. 
+You can refer to Google or relevant documentation to guide you in addressing the issues below.  
 
 1. **Model Training Error Resolution:**
    - Begin by executing `make test` to identify any issues during model training.
