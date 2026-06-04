@@ -6,11 +6,11 @@ You are working on a user interest recommendation system. It consists of:
 - A **Flask API** that fetches user features, calls the model, and returns ranked interests
 - A **feature store** backed by CSV files
 
-There are **6 tasks** to complete. Tasks 1–5 each have a failing test that tells you exactly what to fix. Task 6 is an open-ended feature implementation. You can refer to Google or relevant documentation — no AI-assisted coding tools.
+There are **7 tasks** to complete. Tasks 1–6 each have a failing test or a clear broken behaviour that tells you what to fix. Task 7 is an open-ended feature implementation. You can refer to Google or relevant documentation — no AI-assisted coding tools.
 
 ---
 
-### Terminal setup (do this before task 3)
+### Terminal setup (do this before task 4)
 
 Once the model is trained and served, you'll need **two terminals** running simultaneously inside the container:
 
@@ -19,7 +19,7 @@ Once the model is trained and served, you'll need **two terminals** running simu
 | 1 | `make serve-model` | TF Serving on port 8501 |
 | 2 | `make serve-api` | Flask API on port 5005 |
 
-Keep both running while working on tasks 3–6.
+Keep both running while working on tasks 4–7.
 
 ---
 
@@ -55,7 +55,20 @@ Leave the server running in its terminal.
 
 ---
 
-**3. Fix the interests count**
+**3. Fix the probability scores**
+
+The model's serving function returns raw logit scores, not probabilities. These values are not bounded between 0 and 1 and cannot be meaningfully compared or filtered.
+
+Find where the issue originates and fix it so that the scores returned represent proper probability values. There are two valid approaches — both are acceptable.
+
+Verify:
+```
+make test  # TestModel::test_probability_scores must pass
+```
+
+---
+
+**4. Fix the interests count**
 
 With both servers running, run `make test`. This test fails:
 ```
@@ -69,7 +82,7 @@ make test  # test_basic_response must pass (interests count assertion)
 
 ---
 
-**4. Fix response time**
+**5. Fix response time**
 
 With both servers running, run `make test`. This test fails:
 ```
@@ -83,7 +96,7 @@ make test  # test_basic_response must pass (timing assertion)
 
 ---
 
-**5. Add probability to the response**
+**6. Add probability to the response**
 
 With both servers running, run `make test`. This test fails:
 ```
@@ -97,7 +110,7 @@ make test  # test_with_probability_threshold must pass
 
 ---
 
-**6. Add probability threshold filtering**
+**7. Add probability threshold filtering**
 
 Implement a feature that lets API clients filter results by a minimum probability score. For example:
 

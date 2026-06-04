@@ -32,6 +32,21 @@ class TestModel:
             hyper_params=hyper_params,
         )
 
+    def test_probability_scores(self):
+        input_record = {
+            "USER_HANDLE": tf.constant([self.users[0]]),
+            "USER_TYPE": tf.constant(["B2B"]),
+            "CONTENT_TITLES_JOINED": tf.constant([self.content_titles[0]]),
+        }
+        top_k = tf.constant(1, dtype=tf.int64)
+
+        result = self.model.serving_predict(input_record, top_k)
+        probabilities = result["probabilities"].numpy().flatten()
+
+        assert all(0 <= p <= 1 for p in probabilities), (
+            "Probabilities must be between 0 and 1"
+        )
+
     def test_model_build(self):
         interests_input = [self.interests_vocab[0], self.interests_vocab[3]]
 
