@@ -1,3 +1,6 @@
+# Zscaler cert (machine-specific, copied by initializeCommand)
+.devcontainer/zscaler-bundle.pem
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
