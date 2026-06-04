@@ -1,27 +1,108 @@
-
 ## Coding Challenge
 
-You can refer to Google or relevant documentation to guide you in addressing the issues below.  
+You are working on a user interest recommendation system. It consists of:
 
-1. **Model Training Error Resolution:**
-   - Begin by executing `make test` to identify any issues during model training.
-   - After passing the `TestModel::test_model_build` test, use `make train` followed by `make serve-model` to train and serve the model, preparing it for upcoming steps.
+- A **TensorFlow model** trained on user content interactions, served via TF Serving (Docker)
+- A **Flask API** that fetches user features, calls the model, and returns ranked interests
+- A **feature store** backed by CSV files
 
-2. **API Startup Issue Fix:**
-   - Resolve the Flask API startup issue with `make serve-api`.
-   - Run `make serve-api` to start a development Flask server, then open a new terminal window without shutting down the server.
+There are **6 tasks** to complete. Tasks 1–5 each have a failing test that tells you exactly what to fix. Task 6 is an open-ended feature implementation. You can refer to Google or relevant documentation — no AI-assisted coding tools.
 
-3. **Data Return and Interests Length Correction:**
-   - Execute `make test` and resolve the `TestInterestsAPI::test_basic_response - AssertionError: Incorrect number of interests` test.
-   - Ensure the return data structure and interests array length meet the specifications, adjusting the API as necessary.
+---
 
-4. **Response Time Optimization:**
-   - Run `make test` and fix the `TestInterestsAPI::test_basic_response - AssertionError: Request greater than 1 second` test.
-   - Enhance the API to achieve a response time of one second or less.
+### Terminal setup (do this before task 3)
 
-5. **Probability Field Inclusion:**
-   - Perform `make test` and correct the `TestInterestsAPI::test_with_probability` test.
-   - Update the API response to incorporate a 'probability' field.
+Once the model is trained and served, you'll need **two terminals** running simultaneously inside the container:
 
-6. **Probability Score Filtering Implementation:**
-   - Create a feature allowing API clients to filter results by probability score, enabling users to specify a probability threshold for more targeted results.
+| Terminal | Command | Purpose |
+|---|---|---|
+| 1 | `make serve-model` | TF Serving on port 8501 |
+| 2 | `make serve-api` | Flask API on port 5005 |
+
+Keep both running while working on tasks 3–6.
+
+---
+
+### Tasks
+
+**1. Fix model training**
+
+Run `make test`. The `TestModel::test_model_build` test fails.
+
+Find and fix the bug in the model code, then verify:
+```
+make test  # TestModel::test_model_build must pass
+```
+
+Once passing, train the model and start the model server (leave it running):
+```
+make train
+make serve-model
+```
+
+---
+
+**2. Fix the API startup**
+
+Run `make serve-api`. The Flask application fails to start.
+
+Find and fix the bug, then verify the server starts without errors:
+```
+make serve-api
+```
+
+Leave the server running in its terminal.
+
+---
+
+**3. Fix the interests count**
+
+With both servers running, run `make test`. This test fails:
+```
+TestInterestsAPI::test_basic_response — AssertionError: Incorrect number of interests
+```
+
+Fix the API so it returns the correct number of interests. Verify:
+```
+make test  # test_basic_response must pass (interests count assertion)
+```
+
+---
+
+**4. Fix response time**
+
+With both servers running, run `make test`. This test fails:
+```
+TestInterestsAPI::test_basic_response — AssertionError: Request greater than 1 second
+```
+
+Find the performance bottleneck and fix it. Verify:
+```
+make test  # test_basic_response must pass (timing assertion)
+```
+
+---
+
+**5. Add probability to the response**
+
+With both servers running, run `make test`. This test fails:
+```
+TestInterestsAPI::test_with_probability_threshold
+```
+
+Update the API response so each interest includes a `probability` field. Verify:
+```
+make test  # test_with_probability_threshold must pass
+```
+
+---
+
+**6. Add probability threshold filtering**
+
+Implement a feature that lets API clients filter results by a minimum probability score. For example:
+
+```
+GET /interests/<user_handle>?min_probability=0.5
+```
+
+Should return only interests with probability ≥ 0.5. There is no automated test for this task — demonstrate it works with a curl request.
