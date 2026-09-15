@@ -23,11 +23,25 @@ Once the container starts, dependencies are installed automatically via `make se
 
 ### Test
 
+Each interview task has its own target, so you only see the output for the task you are working on:
+
+| Command | Task |
+|---|---|
+| `make test-1` | 1 — model build |
+| `make test-2` | 2 — API starts up |
+| `make test-3` | 3 — probability scores |
+| `make test-4` | 4 — interests count |
+| `make test-5` | 5 — response time |
+| `make test-6` | 6 — probability in the response |
+| `make test-7` | 7 — `min_probability` filtering |
+
 ```
 make test
 ```
 
-Runs all tests in `./tests` with pytest. Use this to verify each task as you work through the interview.
+Runs every test in `./tests` at once. Prefer the per-task targets while working — tests for tasks you have not reached yet will fail and make the output hard to read.
+
+Run `make` on its own to list every available command.
 
 ### Train
 
