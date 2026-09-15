@@ -28,7 +28,7 @@ E   AssertionError: Incorrect number of interests
 
 That message is the whole signal — you do not need to read the traceback above it.
 
-**The tests are correct.** Nearly every fix belongs in the source code, in `api/` or `model/` — not in `tests/`. **Task 4 is the only exception:** `top_k` has to be passed into the request as a query parameter, so that test does change.
+**The tests are correct.** Nearly every fix belongs in the source code, in `api/` or `model/` — not in `tests/`. **Task 4 is the only exception:**, so that test does change.
 
 ---
 
@@ -102,7 +102,7 @@ With both servers running, run `make test-4`. It fails with:
 AssertionError: Incorrect number of interests
 ```
 
-The test asks for 15 interests but never tells the API how many it wants. Make the request send `top_k`, and make sure the API honours it. Verify:
+The test asks for 15 interests:
 ```
 make test-4
 ```
